@@ -104,7 +104,7 @@ public class SessionLoginFragment extends Fragment {
         if (!session.isOpened() && !session.isClosed()) {
             session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
         } else {
-            Session.openActiveSession(getActivity(), this, true, statusCallback);
+            Session.openActiveSession(getActivity(), this, false, statusCallback);
         }
     }
 
