@@ -87,7 +87,7 @@ public class SessionLoginFragment extends Fragment {
 
     //@SuppressWarnings("deprecation")
 	private void updateView() {
-        Session session = Session.getActiveSession();
+        final Session session = Session.getActiveSession();
         if (session.isOpened()) {
             //textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
             buttonLoginLogout.setText(R.string.logout);
@@ -102,8 +102,8 @@ public class SessionLoginFragment extends Fragment {
 					 Log.d("com.filper.facebook", "lalala2 " + user );
                     if (user != null) {
                         // Display the parsed user info
-                    	textInstructionsOrLink.setText(buildUserInfoDisplay(user));
-                    	Log.d("com.filper.facebook", "lalala3 " + user );
+                    	textInstructionsOrLink.setText(buildUserInfoDisplay(user, session));
+                    	Log.d("com.filper.facebook", "lalala3 " + user + "\n " + response );
                     }					
 				}
             }).executeAsync();
@@ -120,14 +120,19 @@ public class SessionLoginFragment extends Fragment {
     }
 
     
-    private String buildUserInfoDisplay(GraphUser user) {
+    private String buildUserInfoDisplay(GraphUser user, Session session) {
         StringBuilder userInfo = new StringBuilder("");
 
         // Example: typed access (name)
         // - no special permissions required
-        userInfo.append(String.format("Name: %s\n\n", 
-            user.getName()));
-        
+        userInfo.append(String.format("Username: %s\n\n", 
+            user.getUsername()));
+        userInfo.append(String.format("Id: %s\n\n", 
+                user.getId()));
+        userInfo.append(String.format("AccessToken: %s\n\n",
+        		session.getAccessToken()));
+        userInfo.append(String.format("Fist name: %s\n\n", 
+                user.getFirstName()));
         return userInfo.toString();
     }    
     
