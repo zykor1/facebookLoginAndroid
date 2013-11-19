@@ -3,6 +3,7 @@ package com.filper.facebook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.*;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.facebook.LoggingBehavior;
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
+import com.facebook.model.GraphUser;
 
 public class SessionLoginFragment extends Fragment {
-    private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
+    //private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
 
     private TextView textInstructionsOrLink;
     private Button buttonLoginLogout;
@@ -82,14 +85,31 @@ public class SessionLoginFragment extends Fragment {
         Session.saveSession(session, outState);
     }
 
-    private void updateView() {
+    //@SuppressWarnings("deprecation")
+	private void updateView() {
         Session session = Session.getActiveSession();
         if (session.isOpened()) {
-            textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
+            //textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
             buttonLoginLogout.setText(R.string.logout);
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogout(); }
-            });
+            });   
+            
+            
+            Request.newMeRequest(session, new Request.GraphUserCallback() {                	
+				@Override
+				public void onCompleted(GraphUser user, Response response) {
+					 Log.d("com.filper.facebook", "lalala2 " + user );
+                    if (user != null) {
+                        // Display the parsed user info
+                    	textInstructionsOrLink.setText(buildUserInfoDisplay(user));
+                    	Log.d("com.filper.facebook", "lalala3 " + user );
+                    }					
+				}
+            }).executeAsync();
+            
+            
+            
         } else {
             textInstructionsOrLink.setText(R.string.instructions);
             buttonLoginLogout.setText(R.string.login);
@@ -99,12 +119,29 @@ public class SessionLoginFragment extends Fragment {
         }
     }
 
+    
+    private String buildUserInfoDisplay(GraphUser user) {
+        StringBuilder userInfo = new StringBuilder("");
+
+        // Example: typed access (name)
+        // - no special permissions required
+        userInfo.append(String.format("Name: %s\n\n", 
+            user.getName()));
+        
+        return userInfo.toString();
+    }    
+    
+    
+    
+    
     private void onClickLogin() {
         Session session = Session.getActiveSession();
         if (!session.isOpened() && !session.isClosed()) {
             session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+            Log.d("com.filper.facebook", "asd1: " + session);
         } else {
             Session.openActiveSession(getActivity(), this, true, statusCallback);
+            Log.d("com.filper.facebook", "asd2: " + session);
         }
     }
 
