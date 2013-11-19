@@ -18,6 +18,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
+import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
     //private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
@@ -25,6 +26,7 @@ public class SessionLoginFragment extends Fragment {
     private TextView textInstructionsOrLink;
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
+    private ProfilePictureView profilePictureView;
 
     
     
@@ -34,6 +36,7 @@ public class SessionLoginFragment extends Fragment {
 
         buttonLoginLogout = (Button) view.findViewById(R.id.buttonLoginLogout);
         textInstructionsOrLink = (TextView) view.findViewById(R.id.instructionsOrLink);
+        profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
 
@@ -113,6 +116,7 @@ public class SessionLoginFragment extends Fragment {
         } else {
             textInstructionsOrLink.setText(R.string.instructions);
             buttonLoginLogout.setText(R.string.login);
+            profilePictureView.setProfileId(null);
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogin(); }
             });
@@ -133,6 +137,7 @@ public class SessionLoginFragment extends Fragment {
         		session.getAccessToken()));
         userInfo.append(String.format("Fist name: %s\n\n", 
                 user.getFirstName()));
+        profilePictureView.setProfileId(user.getId());
         return userInfo.toString();
     }    
     
