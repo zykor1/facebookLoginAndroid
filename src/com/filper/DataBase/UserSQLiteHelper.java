@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class UserSQLiteHelper extends SQLiteOpenHelper{
 
-	private static int version = 3;
+	private static int version = 4;
 	private static String dbName = "UserFilperDB";
 	private static CursorFactory factory = null;
 	private static final String TAG = "com.filper.websocketService";
@@ -27,7 +27,7 @@ public class UserSQLiteHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 		
 		db.execSQL(sqlCreate);
-		db.execSQL( "CREATE UNIQUE INDEX id_facebook ON UserFilperDB (userName ASC)" );
+		db.execSQL( "CREATE UNIQUE INDEX id_facebook ON UserFilperDB (id_facebook ASC)" );
 		 Log.d(TAG, "Table create");	
 	}
 	

@@ -46,11 +46,11 @@ public class WebSocketService extends Service {
 				   manager = new UserDBManager(WebSocketService.this);
 				   C_USER = null;
 				   C_USER = manager.getInfoUser();
-				  Log.d(TAG, "websocket 2");
-				  if ( C_USER[0] == null)
+				  Log.d(TAG, " " + C_USER);
+				  if ( C_USER[1] == null)
 					  stopSelf(msg.arg1);
 				  else
-					  startClient(C_USER[4], C_USER[0]);
+					  startClient(C_USER[4], C_USER[1]);
 		          // Stop the service using the startId, so that we don't stop
 		          // the service in the middle of handling another job
 		          
@@ -81,11 +81,11 @@ public class WebSocketService extends Service {
 		   manager = new UserDBManager(this);
 		   C_USER = null;
 		   C_USER = manager.getInfoUser();
-		  Log.d(TAG, "websocket 2");
-		  if ( C_USER[0] == null)
+		  Log.d(TAG, "websocket 2: " + C_USER[1] );
+		  if ( C_USER[1] == null)
 			  stopSelf();
 		  else
-			  startClient(C_USER[4], C_USER[0]);
+			  startClient(C_USER[4], C_USER[1]);
 		  
 
 	      Log.d(TAG, "websocket: lost. startId: " + startId + " flags: " + flags + " intent: " + intent  );
@@ -108,7 +108,7 @@ public class WebSocketService extends Service {
 	  @Override
 	  public void onDestroy() {
           EventInscribe eve = new EventInscribe();
-          eve.idFacebook = C_USER[0];
+          eve.idFacebook = C_USER[1];
           eve.status = "False";
           InscribeRpc(eve);
 		  Log.d(TAG, "websocket: lost.");

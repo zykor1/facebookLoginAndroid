@@ -19,13 +19,4 @@
         android:layout_height="wrap_content"
         android:text="@string/login" />
 
-    <com.facebook.widget.ProfilePictureView
-        android:id="@+id/profilepic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:gravity="center_horizontal" >
-
-    </com.facebook.widget.ProfilePictureView>
-
 </LinearLayout>

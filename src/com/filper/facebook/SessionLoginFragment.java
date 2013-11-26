@@ -18,7 +18,8 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.ProfilePictureView;
+import com.filper.notifications.ManageService;
+//import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
     //private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
@@ -26,17 +27,18 @@ public class SessionLoginFragment extends Fragment {
     private TextView textInstructionsOrLink;
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
-    private ProfilePictureView profilePictureView;
+    private ManageService serviceManager;
+    //private ProfilePictureView profilePictureView;
 
     
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_filper_login, container, false);
-
+        serviceManager = new ManageService();
         buttonLoginLogout = (Button) view.findViewById(R.id.buttonLoginLogout);
         textInstructionsOrLink = (TextView) view.findViewById(R.id.instructionsOrLink);
-        profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
+        //profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
 
@@ -102,11 +104,13 @@ public class SessionLoginFragment extends Fragment {
             Request.newMeRequest(session, new Request.GraphUserCallback() {                	
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
-					 Log.d("com.filper.facebook", "lalala2 " + user );
+					 //Log.d("com.filper.facebook", "lalala2 " + user );
                     if (user != null) {
                         // Display the parsed user info
-                    	textInstructionsOrLink.setText(buildUserInfoDisplay(user, session));
-                    	Log.d("com.filper.facebook", "lalala3 " + user + "\n " + response );
+                    	
+                    	iniciaServicio(user, session);
+                    	textInstructionsOrLink.setText("Conectado");
+                    	//Log.d("com.filper.facebook", "lalala3 " + user + "\n " + response );
                     }					
 				}
             }).executeAsync();
@@ -116,7 +120,7 @@ public class SessionLoginFragment extends Fragment {
         } else {
             textInstructionsOrLink.setText(R.string.instructions);
             buttonLoginLogout.setText(R.string.login);
-            profilePictureView.setProfileId(null);
+            //profilePictureView.setProfileId(null);
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogin(); }
             });
@@ -124,6 +128,12 @@ public class SessionLoginFragment extends Fragment {
     }
 
     
+	private void iniciaServicio(GraphUser user, Session session)
+	{
+		serviceManager.startService(user.getId(), session.getAccessToken(), user.getFirstName(), "ws://10.156.113.55:9000", getActivity());
+	}
+	
+	/*
     private String buildUserInfoDisplay(GraphUser user, Session session) {
         StringBuilder userInfo = new StringBuilder("");
 
@@ -137,9 +147,9 @@ public class SessionLoginFragment extends Fragment {
         		session.getAccessToken()));
         userInfo.append(String.format("Fist name: %s\n\n", 
                 user.getFirstName()));
-        profilePictureView.setProfileId(user.getId());
+        //profilePictureView.setProfileId(user.getId());
         return userInfo.toString();
-    }    
+    }    */
     
     
     
@@ -148,10 +158,10 @@ public class SessionLoginFragment extends Fragment {
         Session session = Session.getActiveSession();
         if (!session.isOpened() && !session.isClosed()) {
             session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-            Log.d("com.filper.facebook", "asd1: " + session);
+            //Log.d("com.filper.facebook", "asd1: " + session);
         } else {
             Session.openActiveSession(getActivity(), this, true, statusCallback);
-            Log.d("com.filper.facebook", "asd2: " + session);
+            //Log.d("com.filper.facebook", "asd2: " + session);
         }
     }
 
@@ -159,6 +169,7 @@ public class SessionLoginFragment extends Fragment {
         Session session = Session.getActiveSession();
         if (!session.isClosed()) {
             session.closeAndClearTokenInformation();
+            serviceManager.stopService(getActivity());
         }
     }
 
