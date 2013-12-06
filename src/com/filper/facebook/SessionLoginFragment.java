@@ -1,7 +1,10 @@
 package com.filper.facebook;
 
 
+import java.util.Locale;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.*;
 import android.support.v4.app.Fragment;
@@ -19,6 +22,8 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
 import com.filper.notifications.ManageService;
+import com.filper.location.ManageLocation;
+import com.filper.helpers.HelpersFilper;;
 //import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
@@ -26,8 +31,12 @@ public class SessionLoginFragment extends Fragment {
 
     private TextView textInstructionsOrLink;
     private Button buttonLoginLogout;
+    private Button btnMostrarMapa;
+    private Button btnLlamar;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private ManageService serviceManager;
+    private ManageLocation manageLocation;
+    private HelpersFilper helpersFilper;
     //private ProfilePictureView profilePictureView;
 
     
@@ -37,7 +46,10 @@ public class SessionLoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_filper_login, container, false);
         serviceManager = new ManageService();
         buttonLoginLogout = (Button) view.findViewById(R.id.buttonLoginLogout);
+        btnMostrarMapa = (Button) view.findViewById(R.id.btnMostrarMapa);
+        btnLlamar = (Button) view.findViewById(R.id.llamar);
         textInstructionsOrLink = (TextView) view.findViewById(R.id.instructionsOrLink);
+        manageLocation = new ManageLocation(getActivity());
         //profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
@@ -56,6 +68,30 @@ public class SessionLoginFragment extends Fragment {
             }
         }
 
+        btnMostrarMapa.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				//19.07822187344236, -98.17984503146057
+				// 19.0663198, -98.306147
+				if (manageLocation != null){
+					String[] coordenadas = manageLocation.getCoordenates();
+					if (coordenadas == null)
+						Log.d("com.filper.facebook", "nulo");
+					manageLocation.openGoogleMaps(19.0663198, -98.306147, "punto a mostrar");
+				}
+				
+			}
+		});
+        
+        btnLlamar.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				helpersFilper = new HelpersFilper(SessionLoginFragment.this.getActivity());
+				helpersFilper.openCall("2224112307");
+			}
+		});
+                     
+               
         updateView();
 
         return view;
@@ -109,7 +145,9 @@ public class SessionLoginFragment extends Fragment {
                         // Display the parsed user info
                     	
                     	iniciaServicio(user, session);
-                    	textInstructionsOrLink.setText("Conectado");
+                    	textInstructionsOrLink.setText("Conectado");                        
+                        String aux = manageLocation._latitude;                        
+                        Log.d("TAG", "latitude: " + aux);
                     	//Log.d("com.filper.facebook", "lalala3 " + user + "\n " + response );
                     }					
 				}
@@ -130,7 +168,7 @@ public class SessionLoginFragment extends Fragment {
     
 	private void iniciaServicio(GraphUser user, Session session)
 	{
-		serviceManager.startService(user.getId(), session.getAccessToken(), user.getFirstName(), "ws://10.156.113.55:9000", getActivity());
+		serviceManager.startService(user.getId(), session.getAccessToken(), user.getFirstName(), "ws://198.199.120.36:9000", getActivity());
 	}
 	
 	/*

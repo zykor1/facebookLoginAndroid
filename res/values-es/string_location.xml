@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="messageAlertDialogGPS">Para un mejor funcionamento se necesita usar el GPS, ¿Deseas activarlo?</string>
+    <string name="showInMap">Mostrar en mapa</string>
+    
+</resources>
