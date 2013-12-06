@@ -23,7 +23,8 @@ import com.facebook.Settings;
 import com.facebook.model.GraphUser;
 import com.filper.notifications.ManageService;
 import com.filper.location.ManageLocation;
-import com.filper.helpers.HelpersFilper;;
+import com.filper.helpers.HelpersFilper;
+import com.filper.webService.WebService;
 //import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
@@ -36,6 +37,7 @@ public class SessionLoginFragment extends Fragment {
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private ManageService serviceManager;
     private ManageLocation manageLocation;
+    private WebService webService; 
     private HelpersFilper helpersFilper;
     //private ProfilePictureView profilePictureView;
 
@@ -87,7 +89,7 @@ public class SessionLoginFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				helpersFilper = new HelpersFilper(SessionLoginFragment.this.getActivity());
-				helpersFilper.openCall("2224112307");
+				helpersFilper.openCall("2224112307");				
 			}
 		});
                      
@@ -131,7 +133,8 @@ public class SessionLoginFragment extends Fragment {
         final Session session = Session.getActiveSession();
         if (session.isOpened()) {
             //textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
-            buttonLoginLogout.setText(R.string.logout);
+        	webService = new WebService();
+            buttonLoginLogout.setText(R.string.logout);            
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogout(); }
             });   
