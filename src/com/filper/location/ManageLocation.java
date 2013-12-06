@@ -88,8 +88,6 @@ public class ManageLocation implements LocationListener{
 	public String[] getCoordenates(){	
 		if ((_latitude != null) && (_longitude != null)){
 			String[] aux = new String[2];
-			Log.d("com.filper.location", "_latitude: " + _latitude);
-			Log.d("com.filper.location", "_longitude: " + _longitude);
 			aux[0] = _latitude;
 			aux[1] = _longitude;
 			return aux;
@@ -99,8 +97,7 @@ public class ManageLocation implements LocationListener{
 	
 	
 	@Override
-	public void onLocationChanged(Location location) {	
-		//Log.d("com.filper.location", "location: " + location);		
+	public void onLocationChanged(Location location) {			
 		_latitude = String.valueOf(location.getLatitude());
 		_longitude = String.valueOf(location.getLongitude());
 	}

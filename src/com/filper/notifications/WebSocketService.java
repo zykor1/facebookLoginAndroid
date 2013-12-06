@@ -82,16 +82,11 @@ public class WebSocketService extends Service {
 		   manager = new UserDBManager(this);
 		   C_USER = null;
 		   C_USER = manager.getInfoUser();
-		  Log.d(TAG, "websocket 2: " + C_USER[1] );
 		  if ( C_USER[1] == null)
 			  stopSelf();
 		  else
 			  startClient(C_USER[4], C_USER[1]);
 		  
-
-	      Log.d(TAG, "websocket: lost. startId: " + startId + " flags: " + flags + " intent: " + intent  );
-
-
 	      
 	      // If we get killed, after returning from here, restart
 	      return Service.START_STICKY;
@@ -138,7 +133,7 @@ public class WebSocketService extends Service {
 	/**
 	 *  Declaramos el Tag con el que se realizara el log del servicio (has extras) not found
 	 */
-	private static final String TAG = "com.filper.websocketService";
+	private static final String TAG = "com.filper.notifications";
 	/**
 	 *  Instanciamos la coneccion con la api Autobahn
 	 */
@@ -246,8 +241,7 @@ public class WebSocketService extends Service {
 	                            @Override
 	                            public void onEvent(String topic, Object event) {	   
 	                            	EventNotificacion evt = (EventNotificacion) event;
-	                            	try {
-	                            		Log.d(TAG, "websocket:  " + evt.message);	                            		
+	                            	try {	                            		
 										notificacion(evt.title, evt.message, evt.activity);
 									} catch (ClassNotFoundException e) {
 										Log.d(TAG, "websocket: The class don't exist");

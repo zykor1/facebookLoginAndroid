@@ -11,7 +11,7 @@ import com.filper.notifications.WebSocketService;
 
 public class BootCompletedIntentReceiver extends BroadcastReceiver {
 	
-	private static final String TAG = "com.filper.websocketService";
+	private static final String TAG = "com.filper.notifications";
 	
  @Override
  public void onReceive(Context context, Intent intent) {
