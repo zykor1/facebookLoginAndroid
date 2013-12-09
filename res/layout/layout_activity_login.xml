@@ -8,5 +8,5 @@
     <fragment android:layout_height="fill_parent"
               android:layout_width="fill_parent"
               android:id="@+id/fragment_filper_login"
-              android:name="com.filper.facebook.SessionLoginFragment" />
+              android:name="com.filper.login_with_facebook.SessionLoginFragment" />
 </LinearLayout>

@@ -55,9 +55,9 @@ public class ManageLocation implements LocationListener{
 			});
 			AlertDialog alert = alertDialog.create();
 			alert.show();
-		}else{
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+		}else{			
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 		}
 	}
 	

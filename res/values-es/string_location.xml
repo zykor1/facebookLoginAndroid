@@ -2,5 +2,6 @@
 <resources>
     <string name="messageAlertDialogGPS">Para un mejor funcionamento se necesita usar el GPS, ¿Deseas activarlo?</string>
     <string name="showInMap">Mostrar en mapa</string>
+    <string name="title_tutorial">Tutorial Filper</string>
     
 </resources>

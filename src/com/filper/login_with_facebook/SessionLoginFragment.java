@@ -1,4 +1,4 @@
-package com.filper.facebook;
+package com.filper.login_with_facebook;
 
 
 import java.util.Locale;
@@ -22,24 +22,20 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
 import com.filper.notifications.ManageService;
+import com.filper.facebook.R;
 import com.filper.location.ManageLocation;
-import com.filper.helpers.HelpersFilper;
-import com.filper.webService.WebService;
+import com.filper.tutorial.TutorialActivity;
+import com.filper.webService.WebService;;
 //import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
-    //private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
 
     private TextView textInstructionsOrLink;
     private Button buttonLoginLogout;
-    private Button btnMostrarMapa;
-    private Button btnLlamar;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private ManageService serviceManager;
     private ManageLocation manageLocation;
-    private WebService webService; 
-    private HelpersFilper helpersFilper;
-    //private ProfilePictureView profilePictureView;
+    private WebService webService;
 
     
     
@@ -48,8 +44,6 @@ public class SessionLoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_filper_login, container, false);
         serviceManager = new ManageService();
         buttonLoginLogout = (Button) view.findViewById(R.id.buttonLoginLogout);
-        btnMostrarMapa = (Button) view.findViewById(R.id.btnMostrarMapa);
-        btnLlamar = (Button) view.findViewById(R.id.llamar);
         textInstructionsOrLink = (TextView) view.findViewById(R.id.instructionsOrLink);
         manageLocation = new ManageLocation(getActivity());
         //profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
@@ -69,31 +63,7 @@ public class SessionLoginFragment extends Fragment {
                 session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
             }
         }
-
-        btnMostrarMapa.setOnClickListener(new View.OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				//19.07822187344236, -98.17984503146057
-				// 19.0663198, -98.306147
-				if (manageLocation != null){
-					String[] coordenadas = manageLocation.getCoordenates();
-					if (coordenadas == null)
-						Log.d("com.filper.facebook", "nulo");
-					manageLocation.openGoogleMaps(19.0663198, -98.306147, "punto a mostrar");
-				}
-				
-			}
-		});
-        
-        btnLlamar.setOnClickListener(new View.OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				helpersFilper = new HelpersFilper(SessionLoginFragment.this.getActivity());
-				helpersFilper.openCall("2224112307");				
-			}
-		});
-                     
-               
+                              
         updateView();
 
         return view;
@@ -128,12 +98,13 @@ public class SessionLoginFragment extends Fragment {
         Session.saveSession(session, outState);
     }
 
-    //@SuppressWarnings("deprecation")
+    /**
+     * Actualiza la vista del fragment actual
+     */
 	private void updateView() {
         final Session session = Session.getActiveSession();
         if (session.isOpened()) {
-            //textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
-        	webService = new WebService();
+        	webService = (WebService) this.getActivity().getApplication();
             buttonLoginLogout.setText(R.string.logout);            
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogout(); }
@@ -143,15 +114,13 @@ public class SessionLoginFragment extends Fragment {
             Request.newMeRequest(session, new Request.GraphUserCallback() {                	
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
-					 //Log.d("com.filper.facebook", "lalala2 " + user );
                     if (user != null) {
-                        // Display the parsed user info
-                    	
+                        // Display the parsed user info                         	
                     	iniciaServicio(user, session);
-                    	textInstructionsOrLink.setText("Conectado");                        
-                        String aux = manageLocation._latitude;                        
-                        Log.d("TAG", "latitude: " + aux);
-                    	//Log.d("com.filper.facebook", "lalala3 " + user + "\n " + response );
+                    	textInstructionsOrLink.setText("Conectado");  
+                        String[] aux = manageLocation.getCoordenates();
+                        Intent intent = new Intent(SessionLoginFragment.this.getActivity(), TutorialActivity.class);                        
+                        startActivity(intent);
                     }					
 				}
             }).executeAsync();

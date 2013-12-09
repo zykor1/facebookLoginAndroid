@@ -19,16 +19,6 @@
         android:layout_height="wrap_content"
         android:text="@string/login" />
 
-    <Button
-        android:id="@+id/btnMostrarMapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/showInMap" />
 
-    <Button
-        android:id="@+id/llamar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </LinearLayout>

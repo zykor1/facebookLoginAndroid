@@ -2,11 +2,12 @@ package com.filper.webService;
 
 
 
+import android.app.Application;
 import android.util.Log;
 import de.tavendo.autobahn.Autobahn;
 import de.tavendo.autobahn.AutobahnConnection;
 
-public class WebService {
+public class WebService extends Application {
 	protected static final String TAG = "com.filper.webService";
 	private final AutobahnConnection mConnection = new AutobahnConnection();
 	
@@ -15,6 +16,10 @@ public class WebService {
 	  	   public String status;
 	  	   public String message;
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Inicia el webService haciendo uso de websockets, lo mas recomendable es que solo se instancie una solo vez
