@@ -1,6 +1,6 @@
 package com.filper.tutorial;
 
-import com.filper.facebook.R;
+import com.filper.app.R;
 import com.filper.webService.WebService;
 
 import android.app.Activity;
@@ -28,9 +28,7 @@ public class TutorialActivity extends Activity{
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.layout_activity_tutorial);	 
 	        vf = (ViewFlipper) findViewById(R.id.viewFlipper);
-
-	        webService = (WebService)  getApplication();
-	        
+	        webService = (WebService)  getApplication();	        
 	        vf.setOnTouchListener(new ListenerTouchViewFlipper());
 	        
 	    }
@@ -47,24 +45,25 @@ public class TutorialActivity extends Activity{
 	            case MotionEvent.ACTION_UP: //Cuando el usuario deja de presionar
 	                float distance =init_x-event.getX();
 	 
-	                if(distance>0)
+	                if(distance<0)
 	                {
 	                     
 	 					if (layoutCount > 0){													
-							vf.setInAnimation(inFromRightAnimation());
-		                    vf.setOutAnimation(outToLeftAnimation());
+							
+		                    vf.setInAnimation(inFromLeftAnimation());
+		                    vf.setOutAnimation(outToRightAnimation());
 							vf.showPrevious();
 							layoutCount--;
 							Log.d("Tutorial", "tutorial " + layoutCount);	
 						}
 	                }
 	 
-	                if(distance<0)
+	                if(distance>0)
 	                {
 	                	if (layoutCount <  maxLayout){		                	 						
-	                     vf.setInAnimation(inFromLeftAnimation());
-	                     vf.setOutAnimation(outToRightAnimation());
-	                     vf.showNext();
+	                	 vf.setInAnimation(inFromRightAnimation());
+		                 vf.setOutAnimation(outToLeftAnimation());
+	                     vf.showNext(); 
 	                     layoutCount++;
 	                     Log.d("Tutorial", "tutorial " + layoutCount);
 	                	}
@@ -74,7 +73,7 @@ public class TutorialActivity extends Activity{
 	                break;
 	            }
 	 
-	            return false;
+	            return false; 
 	        }
 
 	 

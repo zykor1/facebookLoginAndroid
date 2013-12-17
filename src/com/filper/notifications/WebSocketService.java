@@ -6,7 +6,7 @@ package com.filper.notifications;
 
 // La siguiente linea debe ser cambiada para accesar a los recursos de tu proyecto android
 import com.filper.DataBase.UserDBManager;
-import com.filper.facebook.R;
+import com.filper.app.R;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -274,7 +274,7 @@ public class WebSocketService extends Service {
 			  .setLights(297402367, 100, 100)
 			  .setAutoCancel(true)
 			  .setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-	  Intent resultIntent = new Intent(this, Class.forName("com.filper.facebook."+activity));
+	  Intent resultIntent = new Intent(this, Class.forName("com.filper."+activity));
 
 
 	  PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);

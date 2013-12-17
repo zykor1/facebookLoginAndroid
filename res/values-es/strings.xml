@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_tutorial">Tutorial Filper</string>
+    <string name="app_name">Filper</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_id">754706067889196</string>
+    
+    
+    <string name="basic_login">Login</string>
+    <string name="basic_instructions">Logeate ahora</string>
+    <string name="basic_logout">Cerrar Sesion</string>
+    <string name="basic_cancelled">Cancelado</string>
+    <string name="basic_permission_not_granted">Permisos no aceptados</string>
+    <string name="basic_ok">Aceptar</string>
+    <string name="basic_cancel">Cancelar</string>
+    
+    
+    <string name="location_messageAlertDialogGPS">Para un mejor funcionamiento se necesita usar el GPS, ¿Deseas activarlo?</string>
+    <string name="location_showInMap">Mostrar en mapa</string>
+    <string name="location_activate_gps">Activar GPS y Network</string>
+</resources>

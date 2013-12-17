@@ -22,10 +22,10 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
 import com.filper.notifications.ManageService;
-import com.filper.facebook.R;
 import com.filper.location.ManageLocation;
 import com.filper.tutorial.TutorialActivity;
-import com.filper.webService.WebService;;
+import com.filper.webService.WebService;
+import com.filper.app.R;
 //import com.facebook.widget.ProfilePictureView;
 
 public class SessionLoginFragment extends Fragment {
@@ -42,10 +42,10 @@ public class SessionLoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_filper_login, container, false);
-        serviceManager = new ManageService();
+        serviceManager = new ManageService();        
         buttonLoginLogout = (Button) view.findViewById(R.id.buttonLoginLogout);
         textInstructionsOrLink = (TextView) view.findViewById(R.id.instructionsOrLink);
-        manageLocation = new ManageLocation(getActivity());
+        manageLocation = new ManageLocation(this.getActivity());
         //profilePictureView = (ProfilePictureView) view.findViewById(R.id.profilepic);
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
@@ -105,7 +105,7 @@ public class SessionLoginFragment extends Fragment {
         final Session session = Session.getActiveSession();
         if (session.isOpened()) {
         	webService = (WebService) this.getActivity().getApplication();
-            buttonLoginLogout.setText(R.string.logout);            
+            buttonLoginLogout.setText(R.string.basic_logout);            
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogout(); }
             });   
@@ -128,8 +128,8 @@ public class SessionLoginFragment extends Fragment {
             
             
         } else {
-            textInstructionsOrLink.setText(R.string.instructions);
-            buttonLoginLogout.setText(R.string.login);
+            textInstructionsOrLink.setText(R.string.basic_instructions);
+            buttonLoginLogout.setText(R.string.basic_login);
             //profilePictureView.setProfileId(null);
             buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) { onClickLogin(); }

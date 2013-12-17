@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">filper</string>
+    <string name="title_tutorial">Tutorial Filper</string>
+    <string name="app_name">Filper</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="app_id">754706067889196</string>
-    <string name="login">Login</string>
-    <string name="instructions">Logeate ahora</string>
-    <string name="logout">Cerrar Sesion</string>
-    <string name="cancelled">Cancelado</string>
-    <string name="permission_not_granted">Permisos no aceptados</string>
-    <string name="ok">Aceptar</string>
+    
+    
+    <string name="basic_login">Login</string>
+    <string name="basic_instructions">Login now</string>
+    <string name="basic_logout">Close Session</string>
+    <string name="basic_cancelled">Cancel</string>
+    <string name="basic_permission_not_granted">Not have permission</string>
+    <string name="basic_ok">OK</string>
+    <string name="basic_cancel">Cancel</string>
+    
+    
+    
+    <string name="location_messageAlertDialogGPS">For best performance you need to use the GPS, you want to activate?</string>
+    <string name="location_showInMap">Show in map</string>
+    <string name="location_activate_gps">Activate GPS and Network</string>
 
 </resources>

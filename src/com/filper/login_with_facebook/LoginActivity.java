@@ -2,7 +2,8 @@ package com.filper.login_with_facebook;
 
 
 
-import com.filper.facebook.R;
+
+import com.filper.app.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

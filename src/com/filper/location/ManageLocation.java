@@ -2,7 +2,7 @@ package com.filper.location;
 
 import java.util.Locale;
 
-import com.filper.facebook.R;
+import com.filper.app.R;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,23 +30,25 @@ public class ManageLocation implements LocationListener{
 	 * @param contexto 
 	 */
 	public ManageLocation(final Context contexto){
-		this.context = contexto;		
+		this.context = contexto;	
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			Log.d("hola", "llegue aqui: " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
 			AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-			alertDialog.setMessage(R.string.messageAlertDialogGPS);
+			alertDialog.setMessage(R.string.location_messageAlertDialogGPS);
 			alertDialog.setCancelable(false);
-			alertDialog.setPositiveButton("Activar GPS", 
+			alertDialog.setPositiveButton(R.string.location_activate_gps, 
 					new DialogInterface.OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							
                             Intent callGPSSettingIntent = new Intent(
                                     android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             contexto.startActivity(callGPSSettingIntent);														
 						}
 					});
-			alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			alertDialog.setNegativeButton(R.string.basic_cancel, new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -55,8 +57,9 @@ public class ManageLocation implements LocationListener{
 			});
 			AlertDialog alert = alertDialog.create();
 			alert.show();
-		}else{			
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+		}else{	
+			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 		}
 	}
