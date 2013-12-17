@@ -19,4 +19,8 @@
     <string name="location_messageAlertDialogGPS">Para un mejor funcionamiento se necesita usar el GPS, ¿Deseas activarlo?</string>
     <string name="location_showInMap">Mostrar en mapa</string>
     <string name="location_activate_gps">Activar GPS y Network</string>
+    
+    <string name="splash_title">Splash</string>
+    <string name="splash_img_description">Nothing</string>
+    
 </resources>
